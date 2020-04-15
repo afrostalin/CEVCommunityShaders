@@ -1,0 +1,611 @@
+#include "Common.cfi"
+#include "ShadowCommon.cfi"
+
+// Shader global descriptions
+float Script : STANDARDSGLOBAL
+<
+	string Script =
+		"Public;"
+		"NoPreview;"        
+		"SupportsAttrInstancing;"   
+		"ShaderDrawType = Light;"  
+		"VertexColors;"
+		"AlphaBlendShadows;"
+#if %DEPTH_FOG
+		"ForceRefractionUpdate;"
+#else
+		"Refractive;"
+#endif
+		"ShaderType = Glass;";
+>;
+
+#ifndef %VERTCOLORS
+#define %VERTCOLORS
+#endif
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////// Custom shading pass structure /////////////////////////////////////
+
+struct CustomForwardShadingAttribs
+{
+	half  backlightMask;
+}; 
+
+#include "ShadeLib.cfi"
+#include "VertexLib.cfi"
+
+//////////////////////////////// Samplers ////////////////
+
+ENVIRONMENTCUBEMAP
+DISSOLVE_NOISE_MAP
+
+sampler2D envMapSamplerRefr
+{
+  Texture = $SceneTarget;
+  MinFilter = POINT;
+  MagFilter = POINT;
+  MipFilter = POINT;  
+  AddressU = Clamp;
+  AddressV = Clamp;   
+  sRGBLookup = true; 
+};
+
+Texture2D tintTex : register(t2)
+<
+  UIName = "Tint Map";
+  sRGBLookup = true;
+> = TM_Specular;
+
+Texture2D tintColorTex : register(9)
+<
+  UIName = "Tint Colour Map";
+  sRGBLookup = true;
+> = TM_Custom;
+
+
+// Tweakables /////////////////
+
+float BumpScale
+<
+  register = REG_PM_PARAM_0.x;
+  string UIHelp = "Set reflection / refraction bump scale";
+  string UIName = "Bump Scale";  
+  string UIWidget = "slider";
+  float UIMin = 0.0;
+  float UIMax = 2.0;
+  float UIStep = 0.1;
+> = 0.1;
+
+float BackLightScale
+<
+  register = REG_PM_PARAM_0.y;
+  string UIHelp = "Set back lighting color scale";                     
+  string UIName = "Back light scale";    
+  string UIWidget = "slider";
+  float UIMin = 0.0;
+  float UIMax = 1.0;
+  float UIStep = 0.01;
+> = 0.5;
+
+float ScopeScale
+<
+  register = REG_PM_PARAM_0.z;
+  string UIHelp = "Scope Scale";
+  string UIName = "Scope Scale";
+  string UIWidget = "slider";
+  float UIMin = -2.0;
+  float UIMax = 2.0;
+  float UIStep = 0.01;
+> = 1.0;
+
+float ScopeOffsetX
+<
+  register = REG_PM_PARAM_0.w;
+  string UIHelp = "Scope Offset X";
+  string UIName = "Scope Offset X";
+  string UIWidget = "slider";
+  float UIMin = -2.0;
+  float UIMax = 2.0;
+  float UIStep = 0.01;
+> = 0.0;
+
+float ScopeOffsetY
+<
+  register = REG_PM_PARAM_2.w;
+  string UIHelp = "Scope Offset Y";
+  string UIName = "Scope Offset Y";
+  string UIWidget = "slider";
+  float UIMin = -2.0;
+  float UIMax = 2.0;
+  float UIStep = 0.01;
+> = 0.0;
+
+float4 TintColor
+<
+  register = REG_PM_PARAM_1;
+  string UIHelp = "Set tint color";                   
+  string UIName = "Tint Color";    
+  string UIWidget = "color";
+> = {1.0, 1.0, 1.0, 1.0};
+
+float TintCloudiness
+<      
+  register = REG_PM_PARAM_2.x;
+  string UIName = "Tint Cloudiness";
+  string UIHelp = "Adjusts cloudiness of tinted areas";
+  string UIWidget = "slider";
+  float UIMin = 0.0;
+  float UIMax = 1.0;
+  float UIStep = 0.01;
+> = 0.0;
+
+#if %DEPTH_FOG
+float FogDensity
+<
+  register = REG_PM_PARAM_2.y;
+  string UIName = "Fog density";
+string UIWidget = "slider";
+float UIMin = 0.0f;
+float UIMax = 10.0f;
+float UIStep = 0.001f;
+> = 1.0;
+
+float FogCutoffEnd
+<
+  register = REG_PM_PARAM_2.z;
+  string UIName = "Fog cutoff end depth";
+string UIHelp = "After this many meters, fog does not get any stronger";
+string UIWidget = "slider";
+float UIMin = 0.0f;
+float UIMax = 1000.0f;	
+float UIStep = 0.001f;
+> = 20.0f;	
+
+float4 FogColor
+<
+register = REG_PM_PARAM_3;  
+string UIName = "Fog color";
+string UIHelp = "Set fog color";
+string UIWidget = "color";
+> = {1.0, 1.0, 1.0, 1.0};
+#endif // %DEPTH_FOG
+
+#if %TINT_MAP
+float CloudinessReducesGloss
+<      
+  register = REG_PM_PARAM_4.z;        
+  string UIName = "Cloudiness Masks Gloss";
+  string UIHelp = "Makes cloudy areas less glossy";
+  string UIWidget = "slider";
+  float UIMin = 0.0;
+  float UIMax = 1.0;
+  float UIStep = 0.001;
+> = 0.5;
+#endif
+
+float BumpMapTile
+<      
+  register = REG_PM_PARAM_4.w;
+  string UIName = "Bump Map Tiling";
+  string UIHelp = "Adjusts tiling of bump map independently from diffuse";
+  string UIWidget = "slider";
+  float UIMin = 0.0;
+  float UIMax = 20.0;
+  float UIStep = 0.01;
+> = 1.0;
+
+////////////////////////////////////////////////////////////////////////////
+// Impact/smash decals
+// Note: Num decals *MUST* be kept in sync with code (D3DREBreakableGlass.cpp)
+#define gNumImpactDecals		8
+#define ResInfoImpactDecal	float2(2048.0f, 1024.0f)
+#define EXTRA_IMPACT_DECALS	1
+
+#define gNumImpactDecalElems 2
+float4 gImpactDecals[gNumImpactDecals * gNumImpactDecalElems];
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+vert2FragGeneral GlassVS(app2vertGeneral IN)
+{
+  vert2FragGeneral OUT = (vert2FragGeneral)0;
+
+  streamPos vertPassPos = (streamPos)0;
+  vs_shared_output( IN, OUT, vertPassPos, false );
+
+  return OUT;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Pixel shader
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void Callback_ShadingDirect(in ForwardShadingAttribs attribs, in ForwardLightParams light, out float3 diffuseAcc, out float3 specularAcc)
+{
+#if !%UNLIT
+	const half lightWrap = 0.15h; // This parameter just wraps the light around a bit more to fake a bit of internal bounce in semi-opaque solid glass. Needs work!
+  
+	half NdotL = dot(attribs.normal, light.lightVec);
+	half frontLightMask = saturate(NdotL + lightWrap); 
+	half NdotLBackLight = saturate(-NdotL + lightWrap) * saturate(attribs.custom.backlightMask - (1 - (BackLightScale * 2))) + frontLightMask;
+    
+	NdotL = saturate(NdotL);
+ 
+	half3 finalIlluminance = NdotL * light.illuminance * NdotLBackLight;
+	diffuseAcc = finalIlluminance;
+	specularAcc = SpecularBRDF(attribs.normal, -normalize(attribs.worldPos), light.lightVec, attribs.smoothness, attribs.reflectance) * finalIlluminance;
+#else
+	diffuseAcc = 0;
+	specularAcc = 0;
+#endif 
+}
+
+#include "ForwardShading.cfi"
+
+void ApplyDecals(float2 baseTC, inout half3 newNormal, inout half holeMask, inout half4 tintMap)
+{
+	// Fixed "random" decal transformations
+	const float randRot[gNumImpactDecals] =
+{
+		4.39f, 1.89f, 3.77f, 1.26f,
+#if EXTRA_IMPACT_DECALS
+		5.03f, 5.66f, 0.63f, 3.14f,
+#endif
+	};
+
+	const float randScale[gNumImpactDecals] =
+	{
+		0.95f, 1.15f, 0.9f, 1.05f,
+#if EXTRA_IMPACT_DECALS
+		0.9f, 1.1f, 0.95f, 1.0f,
+#endif
+	};
+  
+	// Factor in any overlapping decals	
+	float2 decalNorm = 0.0f;
+	
+	for (int i = 0; i < gNumImpactDecals; ++i)
+	{
+		// Get base decal data
+		int decalDataOffset = i * gNumImpactDecalElems;
+		float4 decal = gImpactDecals[decalDataOffset];
+		float2 tempUVs = baseTC.xy - 0.5f;
+		float2 scale = decal.zw * randScale[i];
+
+		// Calculate offset UV coords
+		float2 decalUV = tempUVs;
+		decalUV = decalUV * scale + 0.5f;
+		decalUV += (0.5f - decal.xy) * scale;
+	
+		// Only sample if decal uv is in unit circle around center
+		// - Should save ~20% of redunant samples vs. square test
+		float2 validRange = abs(decalUV - 0.5f);
+		float edgeDistSq = dot(validRange, validRange);
+		float halfUnitRadiusSq = 0.707f * 0.5f;
+  
+		if (edgeDistSq <= halfUnitRadiusSq)
+		{
+			// Convert distance to 1/10th edge fade (to hide any clipping)
+			float edgeFade = edgeDistSq - halfUnitRadiusSq * 0.9f;
+			edgeFade = saturate(1.0f - edgeFade * 10.0f);
+  
+			// Apply local rotation
+			float rsin, rcos;
+			sincos(randRot[i], rsin, rcos);
+
+			tempUVs = decalUV - 0.5f;
+			decalUV.x = dot(tempUVs, float2(rcos, -rsin));
+			decalUV.y = dot(tempUVs, float2(rsin, rcos));
+			decalUV = saturate(decalUV + 0.5f);
+
+			// Convert to atlas decal coordinates
+			float4 atlas = gImpactDecals[decalDataOffset + 1];
+			decalUV = decalUV * atlas.xy + atlas.zw;
+
+			// Apply decal
+			float lodDecal = ComputeTextureLOD(decalUV.xy, ResInfoImpactDecal.xy);
+
+			float3 decalDiff = GetTexture2DLod(decalSampler, float4(decalUV, 0, lodDecal)).rgb;
+ 
+		#if !%TINT_MAP  // TODO: Remove when problem with exceeding 16 samplers is solved
+			decalNorm += GetXYNormalMapLod(decalNormSampler, float4(decalUV, 0, lodDecal)) * edgeFade;
+#endif
+
+			tintMap.w += decalDiff.x * edgeFade;
+			holeMask *= decalDiff.y;
+		}
+	}
+
+	// Stop holes refracting
+	newNormal.xy *= holeMask;
+
+	const float decalNormStrength = 0.75f;
+	newNormal.xy += decalNorm * decalNormStrength;
+}
+
+half4 GetBlurredRefraction(float2 tcProj, half cloudiness)
+{
+	// Copy/pasted DOF blur code - This is too expensive for consoles...
+	// TODO: investigate cheaper version - should probably disable on lower PC settings too.
+	
+	const int tapCount = 37;
+	const float fScale = BlurAmount * 0.003;
+
+	const float2 poisson[37] =
+{
+		float2(-1.0*fScale, 0),
+		float2(-2.0*fScale, 0),
+		float2(-3.0*fScale, 0),
+		float2( 0.0, 0),
+		float2( 3.0*fScale, 0),
+		float2( 2.0*fScale, 0),
+		float2( 1.0*fScale, 0),
+		// 7
+
+		float2(-1.0*fScale, -1.0*fScale),
+		float2(-2.0*fScale, -1.0*fScale),
+		float2(-3.0*fScale, -1.0*fScale),
+		float2( 0.0, -1.0*fScale),
+		float2( 3.0*fScale, -1.0*fScale),
+		float2( 2.0*fScale, -1.0*fScale),
+		float2( 1.0*fScale, -1.0*fScale),
+		// 14
+
+		float2(-1.0*fScale, 1.0*fScale),
+		float2(-2.0*fScale, 1.0*fScale),
+		float2(-3.0*fScale, 1.0*fScale),
+		float2( 0.0, 1.0*fScale),
+		float2( 3.0*fScale, 1.0*fScale),
+		float2( 2.0*fScale, 1.0*fScale),
+		float2( 1.0*fScale, 1.0*fScale),
+		// 21
+
+		float2(-2.0*fScale,  2.0*fScale),
+		float2(-1.0*fScale,  2.0*fScale),
+		float2( 0.0, 2.0*fScale),
+		float2( 1.0*fScale,  2.0*fScale),
+		float2( 2.0*fScale,  2.0*fScale),
+		// 26
+
+		float2(-2.0*fScale, -2.0*fScale),
+		float2(-1.0*fScale, -2.0*fScale),
+		float2( 0.0, -2.0*fScale),
+		float2( 1.0*fScale, -2.0*fScale),
+		float2( 2.0*fScale, -2.0*fScale),
+		// 31
+    
+  
+		float2(-1.0*fScale, 3.0*fScale),
+		float2( 0.0, 3.0*fScale),
+		float2( 1.0*fScale, 3.0*fScale),
+		// 34
+
+		float2(-1.0*fScale, -3.0*fScale),
+		float2( 0.0, -3.0*fScale),
+		float2( 1.0*fScale, -3.0*fScale),
+		// 37
+	};
+  
+	half mask = 1;
+#if %TINT_MAP
+	mask = saturate(cloudiness + (1 - CloudinessMasksBlur));
+#endif
+  
+	half4 cAcc = 0;
+	for (int t = 0; t < tapCount; t++)
+{
+        half4 tap = Fwd_SceneTarget.Sample(ssMaterialBilinearClamp, tcProj + poisson[t] * mask);
+		cAcc += tap;
+   }
+
+	return cAcc / tapCount;
+}
+
+float ComputeDepthFog(in float fDepth, in float fZBuffer, in float fFogDensity)
+{
+	// Sample background depth
+	float fBackgroundZ = fZBuffer;
+
+	// Background depth is in camera depth, correct to be in object depth
+	//	- Clamp depth to enable fade-out against far away objects
+	fBackgroundZ -= fDepth;
+	fBackgroundZ = min(fBackgroundZ, FogCutoffEnd);
+	float fFogLevel = saturate( exp2( -fBackgroundZ * fFogDensity ) );
+
+	return fFogLevel;
+}
+
+
+pixout GlassPS(vert2FragGeneral IN, bool bIsFrontFace : SV_IsFrontFace)
+{
+	pixout OUT = (pixout) 0;
+	
+	ForwardShadingAttribs attribs;
+	attribs.screenUV = IN.screenProj.xy / IN.screenProj.w;
+	attribs.worldPos = IN.vView.xyz;
+	
+	attribs.reflectance = MatSpecColor.xyz;
+	attribs.smoothness = MatSpecColor.w;
+	
+	half4 tintMap = half4(1, 0, 1, 0);  // Initialize to full tint / no cloudiness / full spec / no decals
+	
+#if %_RT_DISSOLVE
+    float fDissolve = Get_SPI_Dissolve();
+	const int2 vPixQuadIdx = (int2)IN.WPos.xy % 2; // 4 transparency levels for a 2x2 quad. We're using dot/abs instead, since rsx doens't support array indexing.
+  
+    clip((fDissolve > 0 ? 1 : -1) * (abs(dot(half4(0.0h, 0.76h, 0.5h, -1.0h), vPixQuadIdx.xxyy)) - abs(fDissolve))); // todo: try using coverage mask when in MSAA mode.
+#endif
+  
+#if !%DIRT_MAP
+	attribs.albedo = half3(0, 0, 0);
+	attribs.custom.backlightMask = 0;
+#else
+	half4 diffuseMap = GetDiffuseTex(diffuseTex, IN.baseTC.xy);
+	attribs.albedo = diffuseMap.rgb * MatDifColor.xyz;
+	attribs.custom.backlightMask = diffuseMap.a;
+	const half reflectanceDielectricLow = 0.03;
+	attribs.reflectance = lerp(MatSpecColor.xyz, reflectanceDielectricLow, diffuseMap.a);
+#endif
+    
+#if %SPECULAR_MAP
+	half3 specMap = GetTexture2D(tintTex, ssMaterialTrilinear, IN.baseTC.xy).xyz;
+      
+#if %TINT_MAP		
+		tintMap.xyz = specMap.xyz;
+		attribs.smoothness *= saturate(1 - tintMap.y * CloudinessReducesGloss);
+		attribs.reflectance = tintMap.zzz;
+#else
+		attribs.reflectance = specMap;
+	#endif
+#endif
+
+	attribs.smoothness *= GetSmoothnessTex(smoothnessTex, IN.baseTC.xy);
+
+	float3 vNormal = cross(IN.vTangent.xyz, IN.vBinormal.xyz) * IN.vTangent.w * (bIsFrontFace ? 1.0f : -1.0f);
+	float3x3 matTangentToWS = float3x3(IN.vTangent.xyz, IN.vBinormal.xyz, vNormal.xyz);
+	
+	half3 normalMap = GetNormalMap(normalsTex, IN.baseTC.xy * BumpMapTile);
+	attribs.normal = normalize(mul(normalMap.xyz, matTangentToWS));
+	attribs.normalSpecProbe = attribs.normal;
+	
+	// TODO: No Decals for the glass
+	// ApplyDecals(IN.baseTC.xy, newNormal, holeMask, tintMap);
+    
+	half3 diffuseAcc = 0;
+	half3 specularAcc = 0;
+	
+	// Handle direct lighting from sun
+  {
+		float sunShadow = 1 - Fwd_SampleSunShadowMaps(attribs.worldPos + GetWorldViewPos());
+
+		ForwardLightParams lightParams;
+		lightParams.type = LT_DIRECTIONAL;
+		lightParams.lightVec = CV_SunLightDir.xyz;
+		lightParams.illuminance = CV_SunColor.xyz * sunShadow;
+		
+		Callback_ShadingDirect(attribs, lightParams, diffuseAcc, specularAcc);
+  }
+  
+#if %_RT_TILED_SHADING
+	TiledForwardShading(attribs, diffuseAcc, specularAcc, ssFwdBilinearWrap, ssFwdComparison, true, true, true);
+#endif
+
+	const half2 refractionNormScale = 0.1h * CV_HPosScale.xy;
+	half2 tcRefractionOffset = normalMap * refractionNormScale;		
+
+	half3 cBackbuffer = 0;
+
+	// Get current pixel screen space coordinates
+	float2 tcProj = (IN.screenProj.xy / IN.screenProj.w);
+
+	// Get refracted depth buffer
+	float fFarPlaneScale = CV_NearFarClipDist.y;
+#if %_RT_NEAREST
+	fFarPlaneScale /= CV_NearFarClipDist.z;
+#endif
+  
+    float2 screenCoords = floor(IN.WPos.xy);
+    float fZBufferRefrac = Fwd_SceneDepth[screenCoords].x * fFarPlaneScale;
+    tcProj += tcRefractionOffset * saturate(fZBufferRefrac - IN.screenProj.w);
+ 
+//#if %BLUR_REFRACTION
+//	cBackbuffer = GetBlurredRefraction(tcProj, tintMap.y).rgb;
+//#else
+//    cBackbuffer = Fwd_SceneTarget.Sample(ssMaterialBilinearClamp, tcProj).rgb;
+//#endif
+
+
+	tcProj *= IN.baseTC.xy * ScopeScale + float2(ScopeOffsetX, ScopeOffsetY);
+
+	cBackbuffer = Fwd_SceneTarget.Sample(ssMaterialBilinearClamp, tcProj).rgb;
+
+#if %DEPTH_FOG
+	// Get depth buffer
+	float fFogLevel = ComputeDepthFog(IN.screenProj.w, fZBufferRefrac, FogDensity);	// Compute fog
+	cBackbuffer = lerp(FogColor.rgb, cBackbuffer, fFogLevel);	// Colorize fog and mix it with backbuffer
+#endif
+
+#if !%_RT_SECONDARY_VIEW && %_RT_FOG && !%_RT_DECAL_TEXGEN_2D && %_RT_VOLUMETRIC_FOG
+	// Subtract volumetric fog color from refraction because fog between camera and glass is applied .
+	half3 fogColor = 0.0f;
+	Fwd_ApplyFog(attribs.worldPos + GetWorldViewPos(), attribs.worldPos, IN.WPos, fogColor.xyz);
+	cBackbuffer -= fogColor.xyz;
+#endif
+
+	const half decalWhiteTint = 0.45h;
+	const half decalCloudiness = 0.45h;
+
+#if %_RT_SAMPLE0
+	half4 vertColor = IN.Color;
+#else
+	half4 vertColor = half4(1,1,1,1);
+#endif
+    float4 localTintColor = TintColor;
+	float localTintCloudiness = TintCloudiness;
+#if %TINT_COLOR_MAP 
+	localTintColor.xyz *= GetTexture2D(tintColorTex, ssMaterialTrilinear, IN.baseTC.xy).xyz;
+#endif
+	localTintColor.xyz = saturate(localTintColor.xyz * vertColor.rgb + tintMap.w * decalWhiteTint); // Tend tint color toward white based on decals
+
+#if %TINT_MAP		
+	localTintCloudiness = saturate(localTintCloudiness * tintMap.x * tintMap.y + tintMap.w * decalCloudiness);
+	localTintColor.xyz = saturate(localTintColor.xyz + (1 - tintMap.x));
+#else
+	localTintCloudiness = saturate(localTintCloudiness + tintMap.w * decalCloudiness);
+#endif
+
+	half3 tintBackground = cBackbuffer * localTintColor.xyz;
+	half3 tintDiffuse = localTintColor.xyz * diffuseAcc;
+	half3 litDiffuse = attribs.albedo * diffuseAcc;
+
+	float3 viewVec = -normalize(attribs.worldPos);
+	half3 fresnel = GetEnvmapFresnel(attribs.reflectance, attribs.smoothness, saturate(dot(attribs.normal, viewVec)));
+	
+	half3 tintBlend = lerp(tintBackground, tintDiffuse, localTintCloudiness);
+	half3 cDiffuse = lerp(tintBlend, litDiffuse, attribs.custom.backlightMask);   
+	half3 cSpecular = specularAcc.xyz;
+	
+	half alpha = vertColor.a;
+	half4 cFinal = half4(lerp(cDiffuse, cSpecular, fresnel), alpha);	
+	
+	Fwd_ApplyFog(attribs.worldPos + GetWorldViewPos(), attribs.worldPos, IN.WPos, cFinal.xyz);
+
+	OUT.Color = cFinal;
+
+	return OUT;  
+}
+
+//////////////////////////////// technique ////////////////
+technique General
+<
+  string Script =     
+		"TechniqueMotionBlur=MotionBlurPass;"
+#ifndef %DEPTH_FOG
+		"TechniqueShadowGen=ShadowGen;"
+#endif
+>
+{  
+  pass p0
+  {
+    VertexShader = GlassVS() GlassVS;
+    PixelShader = GlassPS() GlassPS;
+    GeometryShader = $AutoGS_MultiRes();
+
+    CullMode = Back;
+    ZEnable = true;
+    ZWriteEnable = false;  
+    
+    SrcBlend = SRC_ALPHA;
+    DestBlend = ONE_MINUS_SRC_ALPHA;
+    AlphaBlendEnable = true;
+  }
+}
+
+//////////////////////////////// Common techniques ////////////////
+#include "CommonMotionBlurPass.cfi"
+#ifndef %DEPTH_FOG
+#include "ShadowCommon.cfi"
+#include "CommonShadowGenPass.cfi"
+#endif
