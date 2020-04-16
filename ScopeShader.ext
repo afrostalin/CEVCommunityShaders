@@ -1,3 +1,21 @@
+////////////////////////////////////////////////////////////////////////////
+//
+//  Crytek Engine Source File.
+//  Shader extension
+//  Copyright (C), Crytek Studios, 2001-2020.
+// -------------------------------------------------------------------------
+//  File name:   ScopeShader.ext
+//  Version:     v2.00
+//  Ported:     by AfroStalin
+//  Compilers:   
+//  Description: ScopeShader extension used by the editor
+//               
+// -------------------------------------------------------------------------
+//  History:
+//
+////////////////////////////////////////////////////////////////////////////
+
+
 Version (2.00)
 
 UsesCommonGlobalFlags

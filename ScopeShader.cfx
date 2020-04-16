@@ -37,7 +37,7 @@ struct CustomForwardShadingAttribs
 //////////////////////////////// Samplers ////////////////
 
 ENVIRONMENTCUBEMAP
-DISSOLVE_NOISE_MAP
+
 
 sampler2D envMapSamplerRefr
 {
@@ -331,7 +331,7 @@ half4 GetBlurredRefraction(float2 tcProj, half cloudiness)
 	// TODO: investigate cheaper version - should probably disable on lower PC settings too.
 	
 	const int tapCount = 37;
-	const float fScale = BlurAmount * 0.003;
+	const float fScale = BlurAmount * 0.000;
 
 	const float2 poisson[37] =
 {
@@ -481,7 +481,7 @@ pixout GlassPS(vert2FragGeneral IN, bool bIsFrontFace : SV_IsFrontFace)
 		float sunShadow = 1 - Fwd_SampleSunShadowMaps(attribs.worldPos + GetWorldViewPos());
 
 		ForwardLightParams lightParams;
-		lightParams.type = LT_DIRECTIONAL;
+		lightParams.type = LIGHT_TYPE_SUN;
 		lightParams.lightVec = CV_SunLightDir.xyz;
 		lightParams.illuminance = CV_SunColor.xyz * sunShadow;
 		
