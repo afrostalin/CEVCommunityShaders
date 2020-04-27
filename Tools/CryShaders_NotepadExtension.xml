@@ -1,0 +1,207 @@
+<NotepadPlus>
+    <UserLang name="HLSL" ext="ps_1_0 ps_1_1 ps_1_4 ps_2_0 vs_1_1 vs_2_0 fx">
+        <Settings>
+            <Global caseIgnored="no" />
+            <TreatAsSymbol comment="yes" commentLine="yes" />
+            <Prefix words1="no" words2="no" words3="no" words4="no" />
+        </Settings>
+        <KeywordLists>
+            <Keywords name="Delimiters">&quot;00&quot;00</Keywords>
+            <Keywords name="Folder+"></Keywords>
+            <Keywords name="Folder-"></Keywords>
+            <Keywords name="Operators">&gt;</Keywords>
+            <Keywords name="Comment"> 1/* 2*/ 0//</Keywords>
+            <Keywords name="Words1">bool int half float int2 int3 int4 float2 float3 float4 double string vector matrix float2x2 float3x3 float4x4 float2x4 int2x2 int3x3 int4x4 int2x4 .x .y .z .w .r .g .b .a struct typedef const static uniform extern shared volatile asm compile decl do if else true false for in inline inout out pass pixelshader vertexshader return sampler texture technique while&#x0D;&#x0A;auto break case catch char class&#x0D;&#x0A;const_cast continue default delete dynamic_cast enum&#x0D;&#x0A;explicit friend goto long mutable namespace&#x0D;&#x0A;new operator private protected public register&#x0D;&#x0A;reinterpret_cast short signed sizeof static_cast switch&#x0D;&#x0A;template this throw try typename union&#x0D;&#x0A;unsigned using virtual</Keywords>
+            <Keywords name="Words2">abs ceil clamp cos cross degrees determinant distance dot floor length lerp log log10 log2 max min mul normailize pow radians reflect refract rsqrt saturate sin sincos sqrt tan transpose</Keywords>
+            <Keywords name="Words3">POSITION BLENDWEIGHTS BLENDINDICES NORMAL PSIZE DIFFUSE SPECULAR TEXCOORD TANGENT BINORMAL TESSFACTOR&#x0D;&#x0A;POSITION0 BLENDWEIGHTS0 BLENDINDICES0 NORMAL0 PSIZE0 DIFFUSE0 SPECULAR0 TEXCOORD0 TANGENT0 BINORMAL0 TESSFACTOR0&#x0D;&#x0A;POSITION1 BLENDWEIGHTS1 BLENDINDICES1 NORMAL1 PSIZE1 DIFFUSE1 SPECULAR1 TEXCOORD1 TANGENT1 BINORMAL1 TESSFACTOR1&#x0D;&#x0A;POSITION2 BLENDWEIGHTS2 BLENDINDICES2 NORMAL2 PSIZE2 DIFFUSE2 SPECULAR2 TEXCOORD2 TANGENT2 BINORMAL2 TESSFACTOR2&#x0D;&#x0A;POSITION3 BLENDWEIGHTS3 BLENDINDICES3 NORMAL3 PSIZE3 DIFFUSE3 SPECULAR3 TEXCOORD3 TANGENT3 BINORMAL3 TESSFACTOR3&#x0D;&#x0A;POSITION4 BLENDWEIGHTS4 BLENDINDICES4 NORMAL4 PSIZE4 DIFFUSE4 SPECULAR4 TEXCOORD4 TANGENT4 BINORMAL4 TESSFACTOR4&#x0D;&#x0A;POSITION5 BLENDWEIGHTS5 BLENDINDICES5 NORMAL5 PSIZE5 DIFFUSE5 SPECULAR5 TEXCOORD5 TANGENT5 BINORMAL5 TESSFACTOR5&#x0D;&#x0A;POSITION6 BLENDWEIGHTS6 BLENDINDICES6 NORMAL6 PSIZE6 DIFFUSE6 SPECULAR6 TEXCOORD6 TANGENT6 BINORMAL6 TESSFACTOR6&#x0D;&#x0A;POSITION7 BLENDWEIGHTS7 BLENDINDICES7 NORMAL7 PSIZE7 DIFFUSE7 SPECULAR7 TEXCOORD7 TANGENT7 BINORMAL7 TESSFACTOR7&#x0D;&#x0A;POSITION8 BLENDWEIGHTS8 BLENDINDICES8 NORMAL8 PSIZE8 DIFFUSE8 SPECULAR8 TEXCOORD8 TANGENT8 BINORMAL8 TESSFACTOR8POSITION9 BLENDWEIGHTS9 BLENDINDICES9 NORMAL9 PSIZE9 DIFFUSE9 SPECULAR9 TEXCOORD9 TANGENT9 BINORMAL9 TESSFACTOR9&#x0D;&#x0A;POSITION10 BLENDWEIGHTS10 BLENDINDICES10 NORMAL10 PSIZE10 DIFFUSE10 SPECULAR10 TEXCOORD10 TANGENT10 BINORMAL10 TESSFACTOR10&#x0D;&#x0A;POSITION11 BLENDWEIGHTS11 BLENDINDICES11 NORMAL11 PSIZE11 DIFFUSE11 SPECULAR11 TEXCOORD11 TANGENT11 BINORMAL11 TESSFACTOR11&#x0D;&#x0A;POSITION19 BLENDWEIGHTS19 BLENDINDICES19 NORMAL19 PSIZE19 DIFFUSE19 SPECULAR19 TEXCOORD19 TANGENT19 BINORMAL19 TESSFACTOR19&#x0D;&#x0A;POSITION110 BLENDWEIGHTS110 BLENDINDICES110 NORMAL110 PSIZE110 DIFFUSE110 SPECULAR110 TEXCOORD110 TANGENT110 BINORMAL110 TESSFACTOR110&#x0D;&#x0A;POSITION111 BLENDWEIGHTS111 BLENDINDICES111 NORMAL111 PSIZE111 DIFFUSE111 SPECULAR111 TEXCOORD111 TANGENT111 BINORMAL111 TESSFACTOR111&#x0D;&#x0A;POSITION119 BLENDWEIGHTS119 BLENDINDICES119 NORMAL119 PSIZE119 DIFFUSE119 SPECULAR119 TEXCOORD119 TANGENT119 BINORMAL119 TESSFACTOR15 FOG COLOR0 COLOR1 COLOR2 COLOR3 COLOR4 COLOR5 COLOR6 COLOR7 COLOR8 COLOR9 COLOR10 COLOR11 COLOR12 COLOR13 COLOR14 COLOR15 TEXCOORD0 TEXCOORD1 TEXCOORD2 TEXCOORD3 TEXCOORD4 TEXCOORD5 TEXCOORD6 TEXCOORD7 TEXCOORD8 TEXCOORD9 TEXCOORD10 TEXCOORD11 TEXCOORD12 TEXCOORD13 TEXCOORD14 TEXCOORD15</Keywords>
+            <Keywords name="Words4">COLOR</Keywords>
+        </KeywordLists>
+        <Styles>
+            <WordsStyle name="DEFAULT" styleID="11" fgColor="000000" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="FOLDEROPEN" styleID="12" fgColor="0000FF" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="FOLDERCLOSE" styleID="13" fgColor="0000FF" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="KEYWORD1" styleID="5" fgColor="0000FF" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="KEYWORD2" styleID="6" fgColor="0000FF" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="KEYWORD3" styleID="7" fgColor="8000FF" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="KEYWORD4" styleID="8" fgColor="8000FF" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="COMMENT" styleID="1" fgColor="008040" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="COMMENT LINE" styleID="2" fgColor="008040" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="NUMBER" styleID="4" fgColor="000000" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="OPERATOR" styleID="10" fgColor="000000" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" />
+            <WordsStyle name="DELIMINER1" styleID="14" fgColor="808000" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="DELIMINER2" styleID="15" fgColor="000000" bgColor="FFFFFF" fontName="Courier New" fontStyle="0" fontSize="10" />
+            <WordsStyle name="DELIMINER3" styleID="16" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+        </Styles>
+    </UserLang>
+	 <UserLang name="OGRE Material" ext="material program compositor">
+        <Settings>
+            <Global caseIgnored="no" />
+            <TreatAsSymbol comment="no" commentLine="yes" />
+            <Prefix words1="yes" words2="yes" words3="yes" words4="yes" />
+        </Settings>
+        <KeywordLists>
+            <Keywords name="Delimiters">000000</Keywords>
+            <Keywords name="Folder+">{</Keywords>
+            <Keywords name="Folder-">}</Keywords>
+            <Keywords name="Operators">:</Keywords>
+            <Keywords name="Comment">1/* 2*/ 0//</Keywords>
+            <Keywords name="Words1">compositor target target_output compositor_logic scheme vertex_program geometry_program fragment_program default_params material technique pass texture_unit vertex_program_ref geometry_program_ref fragment_program_ref shadow_caster_vertex_program_ref shadow_receiver_fragment_program_ref shadow_receiver_vertex_program_ref abstract import from cg hlsl glsl</Keywords>
+            <Keywords name="Words2">input texture render_quad source syntax manual_named_constants entry_point profiles includes_skeletal_animation includes_morph_animation includes_pose_animation uses_vertex_texture_fetch uses_adjacency_information target preprocessor_defines column_major_matrices attach input_operation_type output_operation_type max_output_vertices delegate param_indexed param_indexed_auto param_named param_named_auto lod_distances receive_shadows transparency_casts_shadows set set_texture_alias scheme lod_index shadow_caster_material shadow_receiver_material gpu_vendor_rule gpu_device_rule ambient diffuse specular emissive scene_blend separate_scene_blend depth_check depth_write depth_func depth_bias iteration_depth_bias alpha_rejection alpha_to_coverage light_scissor light_clip_planes illumination_stage transparent_sorting normalise_normals cull_hardware cull_software lighting shading polygon_mode polygon_mode_overrideable fog_override colour_write max_lights start_light iteration point_size point_sprites point_size_attenuation point_size_min point_size_max texture_alias texture anim_texture cubic_texture tex_coord_set tex_address_mode tex_border_colour filtering max_anisotropy mipmap_bias colour_op colour_op_ex colour_op_multipass_fallback alpha_op_ex env_map scroll scroll_anim rotate rotate_anim scale wave_xform transform binding_type content_type</Keywords>
+            <Keywords name="Words3">PF_A8R8G8B8 PF_R8G8B8A8 PF_R8G8B8 PF_FLOAT16_RGBA PF_FLOAT16_RGB PF_FLOAT16_R PF_FLOAT32_RGBA PF_FLOAT32_RGB local_scope chain_scope global_scope PF_FLOAT32_R int half float float2 float3 float4 float3x3 float3x4 float4x3 float4x4 double include exclude true false on off none vertexcolour add modulate alpha_blend colour_blend one zero dest_colour src_colour one_minus_dest_colour one_minus_src_colour dest_alpha src_alpha one_minus_dest_alpha one_minus_src_alpha always_fail always_pass less less_equal equal not_equal greater_equal greater clockwise anticlockwise back front flat gouraud phong solid wireframe points type linear exp exp2 colour density start end once once_per_light per_light per_n_lights point directional spot 1d 2d 3d cubic PF_L8 PF_L16 PF_A8 PF_A4L4 PF_BYTE_LA PF_R5G6B5 PF_B5G6R5 PF_R3G3B2 PF_A4R4G4B4 PF_A1R5G5B5 PF_R8G8B8 PF_B8G8R8 PF_A8R8G8B8 PF_A8B8G8R8 PF_B8G8R8A8 PF_R8G8B8A8 PF_X8R8G8B8 PF_X8B8G8R8 PF_A2R10G10B10 PF_A2B10G10R10 PF_FLOAT16_R PF_FLOAT16_RGB PF_FLOAT16_RGBA PF_FLOAT32_R PF_FLOAT32_RGB PF_FLOAT32_RGBA PF_SHORT_RGBA combinedUVW separateUV vertex fragment named shadow wrap clamp mirror border bilinear trilinear anisotropic replace source1 source2 modulate_x2 modulate_x4 add_signed add_smooth subtract blend_diffuse_alpha blend_texture_alpha blend_current_alpha blend_manual dotproduct blend_diffuse_colour src_current src_texture src_diffuse src_specular src_manual spherical planar cubic_reflection cubic_normal xform_type scroll_x scroll_y scale_x scale_y wave_type sine triangle square sawtooth inverse_sawtooth base frequency phase amplitude arbfp1 arbvp1 glslv glslf gp4vp gp4gp gp4fp fp20 fp30 fp40 vp20 vp30 vp40 ps_1_1 ps_1_2 ps_1_3 ps_1_4 ps_2_0 ps_2_a ps_2_b ps_2_x ps_3_0 ps_3_x vs_1_1 vs_2_0 vs_2_a vs_2_x vs_3_0 1d 2d 3d 4d</Keywords>
+            <Keywords name="Words4">gamma pooled no_fsaa depth_pool scope target_width target_height target_width_scaled target_height scaled previous world_matrix inverse_world_matrix transpose_world_matrix inverse_transpose_world_matrix world_matrix_array_3x4 view_matrix inverse_view_matrix transpose_view_matrix inverse_transpose_view_matrix projection_matrix inverse_projection_matrix transpose_projection_matrix inverse_transpose_projection_matrix worldview_matrix inverse_worldview_matrix transpose_worldview_matrix inverse_transpose_worldview_matrix viewproj_matrix inverse_viewproj_matrix transpose_viewproj_matrix inverse_transpose_viewproj_matrix worldviewproj_matrix inverse_worldviewproj_matrix transpose_worldviewproj_matrix inverse_transpose_worldviewproj_matrix texture_matrix render_target_flipping light_diffuse_colour light_specular_colour light_attenuation spotlight_params light_position light_direction light_position_object_space light_direction_object_space light_distance_object_space light_position_view_space light_direction_view_space light_power light_diffuse_colour_power_scaled light_specular_colour_power_scaled light_number light_diffuse_colour_array light_specular_colour_array light_diffuse_colour_power_scaled_array light_specular_colour_power_scaled_array light_attenuation_array spotlight_params_array light_position_array light_direction_array light_position_object_space_array light_direction_object_space_array light_distance_object_space_array light_position_view_space_array light_direction_view_space_array light_power_array light_count light_casts_shadows ambient_light_colour surface_ambient_colour surface_diffuse_colour surface_specular_colour surface_emissive_colour surface_shininess derived_ambient_light_colour derived_scene_colour derived_light_diffuse_colour derived_light_specular_colour derived_light_diffuse_colour_array derived_light_specular_colour_array fog_colour fog_params camera_position camera_position_object_space lod_camera_position lod_camera_position_object_space time_0_x costime_0_x sintime_0_x tantime_0_x time_0_x_packed time_0_1 costime_0_1 sintime_0_1 tantime_0_1 time_0_1_packed time_0_2pi costime_0_2pi sintime_0_2pi tantime_0_2pi time_0_2pi_packed frame_time fps viewport_width viewport_height inverse_viewport_width inverse_viewport_height viewport_size texel_offsets view_direction view_side_vector view_up_vector fov near_clip_distance far_clip_distance texture_viewproj_matrix texture_viewproj_matrix_array texture_worldviewproj_matrix texture_worldviewproj_matrix_array spotlight_viewproj_matrix spotlight_worldviewproj_matrix scene_depth_range shadow_scene_depth_range shadow_colour shadow_extrusion_distance texture_size inverse_texture_size packed_texture_size pass_number pass_iteration_number animation_parametric custom</Keywords>
+        </KeywordLists>
+        <Styles>
+            <WordsStyle name="DEFAULT" styleID="11" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="FOLDEROPEN" styleID="12" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="FOLDERCLOSE" styleID="13" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD1" styleID="5" fgColor="000088" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD2" styleID="6" fgColor="0000FF" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD3" styleID="7" fgColor="FF0000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="KEYWORD4" styleID="8" fgColor="0392EB" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="COMMENT" styleID="1" fgColor="008080" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="COMMENT LINE" styleID="2" fgColor="008080" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="NUMBER" styleID="4" fgColor="FB00FF" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="OPERATOR" styleID="10" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="DELIMINER1" styleID="14" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER2" styleID="15" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER3" styleID="16" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+        </Styles>
+    </UserLang>
+    <UserLang name="OGRE Overlay" ext="overlay">
+        <Settings>
+            <Global caseIgnored="no" />
+            <TreatAsSymbol comment="no" commentLine="yes" />
+            <Prefix words1="no" words2="no" words3="no" words4="no" />
+        </Settings>
+        <KeywordLists>
+            <Keywords name="Delimiters">000000</Keywords>
+            <Keywords name="Folder+">{</Keywords>
+            <Keywords name="Folder-">}</Keywords>
+            <Keywords name="Operators">( ) :</Keywords>
+            <Keywords name="Comment">1/* 2*/ 0//</Keywords>
+            <Keywords name="Words1">template element container zorder</Keywords>
+            <Keywords name="Words2">metrics_mode caption width height font_name char_height space_width colour material transparent uv_coords top left vert_align horz_align alignment border_material border_size border_topleft_uv border_top_uv border_topright_uv border_left_uv border_right_uv border_bottomleft_uv border_bottom_uv border_bottomright_uv</Keywords>
+            <Keywords name="Words3">pixels relative true false center bottom right</Keywords>
+            <Keywords name="Words4">Panel BorderPanel TextArea</Keywords>
+        </KeywordLists>
+        <Styles>
+            <WordsStyle name="DEFAULT" styleID="11" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="FOLDEROPEN" styleID="12" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="FOLDERCLOSE" styleID="13" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD1" styleID="5" fgColor="000088" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD2" styleID="6" fgColor="0000FF" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD3" styleID="7" fgColor="FF0000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="KEYWORD4" styleID="8" fgColor="0392EB" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="COMMENT" styleID="1" fgColor="008080" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="COMMENT LINE" styleID="2" fgColor="008080" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="NUMBER" styleID="4" fgColor="FB00FF" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="OPERATOR" styleID="10" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="DELIMINER1" styleID="14" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER2" styleID="15" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER3" styleID="16" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+        </Styles>
+    </UserLang>
+    <UserLang name="OGRE Particle" ext="particle">
+        <Settings>
+            <Global caseIgnored="no" />
+            <TreatAsSymbol comment="no" commentLine="yes" />
+            <Prefix words1="yes" words2="yes" words3="yes" words4="yes" />
+        </Settings>
+        <KeywordLists>
+            <Keywords name="Delimiters">000000</Keywords>
+            <Keywords name="Folder+">{</Keywords>
+            <Keywords name="Folder-">}</Keywords>
+            <Keywords name="Operators">:</Keywords>
+            <Keywords name="Comment">1/* 2*/ 0//</Keywords>
+            <Keywords name="Words1">particle_system emitter affector</Keywords>
+            <Keywords name="Words2">quota material particle_width particle_height cull_each billboard_type billboard_origin billboard_rotation_type common_direction common_up_vector renderer sorted local_space point_rendering accurate_facing iteration_interval nonvisible_update_timeout angle colour colour_range_start colour_range_end direction emission_rate position velocity velocity_min velocity_max time_to_live time_to_live_min time_to_live_max duration duration_min duration_max repeat_delay repeat_delay_min repeat_delay_max width height depth inner_width inner_height inner_depth emit_emitter_quota name emit_emitter force_vector force_application red green blue alpha red1 red2 green1 green2 blue1 blue2 alpha1 alpha2 state_change rate rotation_speed_range_start rotation_speed_range_end rotation_range_start rotation_range_end time0 colour0 time1 colour1 time2 colour2 time3 colour3 time4 colour4 time5 colour5 image plane_point plane_normal bounce randomness scope keep_velocity</Keywords>
+            <Keywords name="Words3">true false point oriented_common oriented_self perpendicular_common perpendicular_self top_left top_center top_right center_left center center_right bottom_left bottom_center bottom_right vertex texcoord on off average add</Keywords>
+            <Keywords name="Words4">Point Box Cylinder Ellipsoid HollowEllipsoid Ring LinearForce ColourFader ColourFader2 Scaler Rotator ColourInterpolator ColourImage DeflectorPlane DirectionRandomiser</Keywords>
+        </KeywordLists>
+        <Styles>
+            <WordsStyle name="DEFAULT" styleID="11" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="FOLDEROPEN" styleID="12" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="FOLDERCLOSE" styleID="13" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD1" styleID="5" fgColor="000088" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD2" styleID="6" fgColor="0000FF" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD3" styleID="7" fgColor="FF0000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="KEYWORD4" styleID="8" fgColor="0392EB" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="COMMENT" styleID="1" fgColor="008080" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="COMMENT LINE" styleID="2" fgColor="008080" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="NUMBER" styleID="4" fgColor="FB00FF" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="OPERATOR" styleID="10" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="DELIMINER1" styleID="14" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER2" styleID="15" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER3" styleID="16" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+        </Styles>
+    </UserLang>
+    <UserLang name="Nvidia cg" ext="cg cgfx hlsl glsl">
+        <Settings>
+            <Global caseIgnored="no" />
+            <TreatAsSymbol comment="no" commentLine="yes" />
+            <Prefix words1="no" words2="no" words3="no" words4="no" />
+        </Settings>
+        <KeywordLists>
+            <Keywords name="Delimiters">000000</Keywords>
+            <Keywords name="Folder+">{</Keywords>
+            <Keywords name="Folder-">}</Keywords>
+            <Keywords name="Operators">- ! ( ) . , : ; + [ ] &lt; = &gt;</Keywords>
+            <Keywords name="Comment">1/* 2*/ 0//</Keywords>
+            <Keywords name="Words1">struct discard returntechnique pass compile trunc arbfp1 arbvp1 fp20 fp30 fp40 glslf glslg glslv gp4 gp4fp gp4gp gp4vp hlslf hlslv ps_1_1 ps_1_2 ps_1_3 ps_2_0 ps_2_x ps_3_0 ps_4_0 vp20 vp30 vp40 vs_4_0 gs_4_0 x y z w xy xz xw yz yw zw xyz xyw xzw yzw xyzw r g b a rg rb ra gb ga ba rgb rga rba gba rgba argb</Keywords>
+            <Keywords name="Words2">return bool const static uniform varying register in inout interface out void while for do if else typedef _SEQ _SGE _SGT _SLE _SLT _SNE HPOS POSITION PSIZ WPOS COLOR COLOR0 COLOR1 COLOR2 COLOR3 COL0 COL1 BCOL0 BCOL1 FOGP FOGC NRML NORMAL TEXCOORD0 TEXCOORD1 TEXCOORD2 TEXCOORD3 TEXCOORD4 TEXCOORD5 TEXCOORD6 TEXCOORD7 TANGENT0 TANGENT1 TANGENT2 TANGENT3 TANGENT4 TANGENT5 TANGENT6 TANGENT7 TEX0 TEX1 TEX2 TEX3 TEX4 TEX5 TEX6 TEX7 DEPR DEPTH ATTR0 ATTR1 ATTR2 ATTR3 ATTR4 ATTR5 ATTR6 ATTR7 ATTR8 ATTR9 ATTR10 ATTR11 ATTR12 ATTR13 ATTR14 ATTR15 POINT POINT_OUT LINE LINE_ADJ LINE_OUT TRIANGLE_OUT TRIANGLE TRIANGLE_ADJ</Keywords>
+            <Keywords name="Words3">int1 int2 int3 int4 float float1 float2 float3 float4 float1x1 float1x2 float1x3 float1x4 float2x1 float2x2 float2x3 float2x4 float3x1 float3x2 float3x3 float3x4 float4x1 float4x2 float4x3 float4x4 fixed fixed1 fixed2 fixed3 fixed4 half half1 half2 half3 half4</Keywords>
+            <Keywords name="Words4">sincos abs acos asin atan atan2 ceil clamp cos cosh cross ddx ddy degrees dot exp exp2 floor fmod frexp frac isfinite isinf isnan ldexp log log2 log10 max min mix mul lerp modf noise pow radians round rsqrt sign sin sinh smoothstep step sqrt tan tanh distance fresnel length normalize reflect reflectn refract refractn tex1D f1tex1D f2tex1D f3tex1D f4tex1D h1tex1D h2tex1D h3tex1D h4tex1D x1tex1D x2tex1D x3tex1D x4tex1D tex1Dbias tex2Dbias tex3Dbias texRECTbias texCUBEbias tex1Dlod tex2Dlod tex3Dlod texRECTlod texCUBElod tex1Dproj f1tex1Dproj f2tex1Dproj f3tex1Dproj f4tex1Dproj h1tex1Dproj h2tex1Dproj h3tex1Dproj h4tex1Dproj x1tex1Dproj x2tex1Dproj x3tex1Dproj x4tex1Dproj tex2D f1tex2D f2tex2D f3tex2D f4tex2D h1tex2D h2tex2D h3tex2D h4tex2D x1tex2D x2tex2D x3tex2D x4tex2D tex2Dproj f1tex2Dproj f2tex2Dproj f3tex2Dproj f4tex2Dproj h1tex2Dproj h2tex2Dproj h3tex2Dproj h4tex2Dproj x1tex2Dproj x2tex2Dproj x3tex2Dproj x4tex2Dproj tex3D f1tex3D f2tex3D f3tex3D f4tex3D h1tex3D h2tex3D h3tex3D h4tex3D x1tex3D x2tex3D x3tex3D x4tex3D tex3Dproj f1tex3Dproj f2tex3Dproj f3tex3Dproj f4tex3Dproj h1tex3Dproj h2tex3Dproj h3tex3Dproj h4tex3Dproj x1tex3Dproj x2tex3Dproj x3tex3Dproj x4tex3Dproj tex1CUBE f1texCUBE f2texCUBE f3texCUBE f4texCUBE h1texCUBE h2texCUBE h3texCUBE h4texCUBE x1texCUBE x2texCUBE x3texCUBE x4texCUBE texCUBEproj f1texCUBEproj f2texCUBEproj f3texCUBEproj f4texCUBEproj h1texCUBEproj h2texCUBEproj h3texCUBEproj h4texCUBEproj x1texCUBEproj x2texCUBEproj x3texCUBEproj x4texCUBEproj f1texCUBE f2texCUBE f3texCUBE f4texCUBE h1texCUBE h2texCUBE h3texCUBE h4texCUBE x1texCUBE x2texCUBE x3texCUBE x4texCUBE texRECT f1texRECT f2texRECT f3texRECT f4texRECT h1texRECT h2texRECT h3texRECT h4texRECT x1texRECT x2texRECT x3texRECT x4texRECT texRECTproj f1texRECTproj f2texRECTproj f3texRECTproj f4texRECTproj h1texRECTproj h2texRECTproj h3texRECTproj h4texRECTproj x1texRECTproj x2texRECTproj x3texRECTproj x4texRECTproj f1texRECT f2texRECT f3texRECT f4texRECT h1texRECT h2texRECT h3texRECT h4texRECT x1texRECT x2texRECT x3texRECT x4texRECT texcompare2D f1texcompare2D f1texcompare2D f1texcompare2D h1texcompare2D h1texcompare2D h1texcompare2D x1texcompare2D x1texcompare2D x1texcompare2D pack_2half unpack_2half pack_4clamp1s unpack_4clamp1s application2vertex vertex2fragment sampler1D sampler1DARRAY sampler2D sampler2DARRAY sampler3D samplerCUBE samplerRECT</Keywords>
+        </KeywordLists>
+        <Styles>
+            <WordsStyle name="DEFAULT" styleID="11" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="FOLDEROPEN" styleID="12" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="FOLDERCLOSE" styleID="13" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD1" styleID="5" fgColor="FFAE00" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD2" styleID="6" fgColor="0000FF" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD3" styleID="7" fgColor="FF0000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD4" styleID="8" fgColor="0392EB" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="COMMENT" styleID="1" fgColor="008000" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="COMMENT LINE" styleID="2" fgColor="008000" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="NUMBER" styleID="4" fgColor="FF00FF" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="OPERATOR" styleID="10" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="DELIMINER1" styleID="14" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER2" styleID="15" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER3" styleID="16" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+        </Styles>
+    </UserLang>
+	<UserLang name="CRYENGINE Shader" ext="ext cfi cfx">
+        <Settings>
+            <Global caseIgnored="no" />
+            <TreatAsSymbol comment="no" commentLine="yes" />
+            <Prefix words1="no" words2="no" words3="no" words4="no" />
+        </Settings>
+        <KeywordLists>
+            <Keywords name="Delimiters">000000</Keywords>
+            <Keywords name="Folder+">{</Keywords>
+            <Keywords name="Folder-">}</Keywords>
+            <Keywords name="Operators">- ! | ( ) . , % : ; + [ ] &lt; = &gt;</Keywords>
+            <Keywords name="Comment">1/* 2*/ 0//</Keywords>
+            <Keywords name="Words1">struct discard returntechnique technique pass compile trunc arbfp1 arbvp1 fp20 fp30 fp40 glslf glslg glslv gp4 gp4fp gp4gp gp4vp hlslf hlslv ps_1_1 ps_1_2 ps_1_3 ps_2_0 ps_2_x ps_3_0 ps_4_0 vp20 vp30 vp40 vs_4_0 gs_4_0 x y z w xy xz xw yz yw zw xyz xyw xzw yzw xyzw r g b a rg rb ra gb ga ba rgb rga rba gba rgba argb</Keywords>
+            <Keywords name="Words2">#else #if #elif #endif #include return string bool const static uniform varying register in inout interface out void while for do if else typedef _SEQ _SGE _SGT _SLE _SLT _SNE HPOS POSITION PSIZ WPOS COLOR COLOR0 COLOR1 COLOR2 COLOR3 COL0 COL1 BCOL0 BCOL1 FOGP FOGC NRML NORMAL TEXCOORD0 TEXCOORD1 TEXCOORD2 TEXCOORD3 TEXCOORD4 TEXCOORD5 TEXCOORD6 TEXCOORD7 TANGENT0 TANGENT1 TANGENT2 TANGENT3 TANGENT4 TANGENT5 TANGENT6 TANGENT7 TEX0 TEX1 TEX2 TEX3 TEX4 TEX5 TEX6 TEX7 DEPR DEPTH ATTR0 ATTR1 ATTR2 ATTR3 ATTR4 ATTR5 ATTR6 ATTR7 ATTR8 ATTR9 ATTR10 ATTR11 ATTR12 ATTR13 ATTR14 ATTR15 POINT POINT_OUT LINE LINE_ADJ LINE_OUT TRIANGLE_OUT TRIANGLE TRIANGLE_ADJ</Keywords>
+            <Keywords name="Words3">streamPos OUT int1 int2 int3 int4 float float1 float2 float3 float4 float1x1 float1x2 float1x3 float1x4 float2x1 float2x2 float2x3 float2x4 float3x1 float3x2 float3x3 float3x4 float4x1 float4x2 float4x3 float4x4 fixed fixed1 fixed2 fixed3 fixed4 half half1 half2 half3 half4</Keywords>
+            <Keywords name="Words4">sincos abs acos asin atan atan2 ceil clamp cos cosh cross ddx ddy degrees dot exp exp2 floor fmod frexp frac isfinite isinf isnan ldexp log log2 log10 max min mix mul lerp modf noise pow radians round rsqrt sign sin sinh smoothstep step sqrt tan tanh distance fresnel length normalize reflect reflectn refract refractn tex1D f1tex1D f2tex1D f3tex1D f4tex1D h1tex1D h2tex1D h3tex1D h4tex1D x1tex1D x2tex1D x3tex1D x4tex1D tex1Dbias tex2Dbias tex3Dbias texRECTbias texCUBEbias tex1Dlod tex2Dlod tex3Dlod texRECTlod texCUBElod tex1Dproj f1tex1Dproj f2tex1Dproj f3tex1Dproj f4tex1Dproj h1tex1Dproj h2tex1Dproj h3tex1Dproj h4tex1Dproj x1tex1Dproj x2tex1Dproj x3tex1Dproj x4tex1Dproj tex2D f1tex2D f2tex2D f3tex2D f4tex2D h1tex2D h2tex2D h3tex2D h4tex2D x1tex2D x2tex2D x3tex2D x4tex2D tex2Dproj f1tex2Dproj f2tex2Dproj f3tex2Dproj f4tex2Dproj h1tex2Dproj h2tex2Dproj h3tex2Dproj h4tex2Dproj x1tex2Dproj x2tex2Dproj x3tex2Dproj x4tex2Dproj tex3D f1tex3D f2tex3D f3tex3D f4tex3D h1tex3D h2tex3D h3tex3D h4tex3D x1tex3D x2tex3D x3tex3D x4tex3D tex3Dproj f1tex3Dproj f2tex3Dproj f3tex3Dproj f4tex3Dproj h1tex3Dproj h2tex3Dproj h3tex3Dproj h4tex3Dproj x1tex3Dproj x2tex3Dproj x3tex3Dproj x4tex3Dproj tex1CUBE f1texCUBE f2texCUBE f3texCUBE f4texCUBE h1texCUBE h2texCUBE h3texCUBE h4texCUBE x1texCUBE x2texCUBE x3texCUBE x4texCUBE texCUBEproj f1texCUBEproj f2texCUBEproj f3texCUBEproj f4texCUBEproj h1texCUBEproj h2texCUBEproj h3texCUBEproj h4texCUBEproj x1texCUBEproj x2texCUBEproj x3texCUBEproj x4texCUBEproj f1texCUBE f2texCUBE f3texCUBE f4texCUBE h1texCUBE h2texCUBE h3texCUBE h4texCUBE x1texCUBE x2texCUBE x3texCUBE x4texCUBE texRECT f1texRECT f2texRECT f3texRECT f4texRECT h1texRECT h2texRECT h3texRECT h4texRECT x1texRECT x2texRECT x3texRECT x4texRECT texRECTproj f1texRECTproj f2texRECTproj f3texRECTproj f4texRECTproj h1texRECTproj h2texRECTproj h3texRECTproj h4texRECTproj x1texRECTproj x2texRECTproj x3texRECTproj x4texRECTproj f1texRECT f2texRECT f3texRECT f4texRECT h1texRECT h2texRECT h3texRECT h4texRECT x1texRECT x2texRECT x3texRECT x4texRECT texcompare2D f1texcompare2D f1texcompare2D f1texcompare2D h1texcompare2D h1texcompare2D h1texcompare2D x1texcompare2D x1texcompare2D x1texcompare2D pack_2half unpack_2half pack_4clamp1s unpack_4clamp1s application2vertex vertex2fragment sampler1D sampler1DARRAY sampler2D sampler2DARRAY sampler3D samplerCUBE samplerRECT Texture2D</Keywords>
+        </KeywordLists>
+        <Styles>
+            <WordsStyle name="DEFAULT" styleID="11" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="FOLDEROPEN" styleID="12" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="FOLDERCLOSE" styleID="13" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD1" styleID="5" fgColor="FFAE00" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD2" styleID="6" fgColor="0000FF" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD3" styleID="7" fgColor="FF0000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="KEYWORD4" styleID="8" fgColor="0392EB" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="COMMENT" styleID="1" fgColor="008000" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="COMMENT LINE" styleID="2" fgColor="008000" bgColor="FFFFFF" fontName="" fontStyle="2" />
+            <WordsStyle name="NUMBER" styleID="4" fgColor="FF00FF" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="OPERATOR" styleID="10" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="1" />
+            <WordsStyle name="DELIMINER1" styleID="14" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER2" styleID="15" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+            <WordsStyle name="DELIMINER3" styleID="16" fgColor="000000" bgColor="FFFFFF" fontName="" fontStyle="0" />
+        </Styles>
+    </UserLang>
+	
+</NotepadPlus>
